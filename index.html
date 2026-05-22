@@ -1,0 +1,1156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Advanced Data Communication: Principles and Applications of Satellite Communication — an academic single-page overview." />
+  <title>Advanced Data Communication — Satellite Systems & Principles</title>
+
+  <style>
+    /* Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;600;700&display=swap');
+
+    :root{
+      --navy:#0a1628;
+      --blue:#1e90ff;
+      --white:#ffffff;
+      --muted:#c7d4e6;
+      --card:#0f223a;
+      --card2:#0c1d33;
+      --border:rgba(255,255,255,0.12);
+      --shadow:0 10px 30px rgba(0,0,0,0.35);
+      --shadowSoft:0 8px 20px rgba(0,0,0,0.25);
+      --radius:18px;
+      --radiusSm:14px;
+      --max:1100px;
+    }
+
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      font-family:'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 500px at 20% -10%, rgba(30,144,255,0.30), transparent 55%),
+                  radial-gradient(1000px 400px at 80% 0%, rgba(30,144,255,0.18), transparent 50%),
+linear-gradient(180deg, #070f1d 0%, var(--navy) 30%, #071022 100%);
+      color: var(--white);
+      line-height:1.6;
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    img{ max-width:100%; display:block; }
+
+    /* Navbar */
+    .site-header{
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      z-index:50;
+      background: rgba(10,22,40,0.55);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav-wrap{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 12px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 16px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      min-width: 200px;
+    }
+
+    .brand-mark{
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(30,144,255,0.95), rgba(30,144,255,0.25));
+      box-shadow: 0 0 0 1px rgba(30,144,255,0.35), 0 10px 30px rgba(30,144,255,0.25);
+      display:grid;
+      place-items:center;
+      flex: 0 0 auto;
+    }
+
+    .brand-mark svg{ width: 18px; height: 18px; opacity:0.95; }
+
+    .brand-title{
+      display:flex;
+      flex-direction:column;
+      line-height:1.1;
+    }
+
+    .brand-title strong{
+      font-family:'Orbitron', system-ui, sans-serif;
+      letter-spacing:0.3px;
+      font-size: 13px;
+    }
+
+    .brand-title span{
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    nav{
+      display:flex;
+      align-items:center;
+      gap: 6px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .nav-link{
+      position:relative;
+      padding: 10px 12px;
+      border-radius: 999px;
+      color: rgba(255,255,255,0.82);
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing:0.15px;
+      transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+      outline:none;
+    }
+
+    .nav-link:hover{
+      background: rgba(30,144,255,0.14);
+      color: rgba(255,255,255,0.98);
+      transform: translateY(-1px);
+    }
+
+    .nav-link[aria-current="page"]{
+      background: rgba(30,144,255,0.22);
+      color: #fff;
+      box-shadow: 0 0 0 1px rgba(30,144,255,0.35) inset;
+    }
+
+    /* Layout */
+    main{ padding-top: 78px; }
+
+    section{
+      padding: 56px 16px;
+    }
+
+    .container{
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+
+    .section-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      align-items:start;
+    }
+
+    /* Headings + animations */
+    .section-title{
+      font-family:'Orbitron', system-ui, sans-serif;
+      letter-spacing: 0.6px;
+      font-weight: 700;
+      margin: 0 0 10px 0;
+      font-size: clamp(20px, 2.6vw, 30px);
+    }
+
+    .fade-in-up{
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 650ms ease, transform 650ms ease;
+      will-change: transform, opacity;
+    }
+
+    .fade-in-up.is-visible{
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Cards */
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: var(--radius);
+      box-shadow: var(--shadowSoft);
+      overflow:hidden;
+    }
+
+    .card-body{ padding: 20px; }
+
+    .card:hover{
+      transform: translateY(-4px);
+      transition: transform 220ms ease;
+    }
+
+    .btn-row{ display:flex; gap: 12px; flex-wrap:wrap; }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+      box-shadow: 0 10px 22px rgba(0,0,0,0.22);
+      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+      cursor:pointer;
+      user-select:none;
+    }
+
+    .btn:hover{ transform: translateY(-2px); background: rgba(30,144,255,0.14); border-color: rgba(30,144,255,0.35); }
+
+    .btn-primary{
+      background: linear-gradient(135deg, rgba(30,144,255,0.95), rgba(30,144,255,0.30));
+      border-color: rgba(30,144,255,0.45);
+    }
+
+    .btn svg{ width: 18px; height: 18px; }
+
+    /* Hero */
+    .hero{
+      padding-top: 12px;
+      padding-bottom: 18px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .hero h1{
+      font-family:'Orbitron', system-ui, sans-serif;
+      font-size: clamp(26px, 3.8vw, 44px);
+      line-height:1.1;
+      margin: 0;
+      letter-spacing:0.7px;
+    }
+
+    .hero .subheading{
+      font-size: clamp(14px, 1.7vw, 18px);
+      color: var(--muted);
+      margin-top: 10px;
+      font-weight: 600;
+    }
+
+    .hero p{
+      margin: 14px 0 0 0;
+      color: rgba(255,255,255,0.86);
+      font-size: 15.5px;
+      max-width: 64ch;
+    }
+
+    .hero-panels{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .mini-stat{
+      border-radius: var(--radiusSm);
+      padding: 14px 14px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .mini-stat .k{
+      font-family:'Orbitron', system-ui, sans-serif;
+      letter-spacing:0.4px;
+      font-weight:700;
+      color: rgba(255,255,255,0.95);
+      font-size: 14px;
+    }
+
+    .mini-stat .v{
+      color: var(--muted);
+      margin-top: 6px;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .sep{
+      height: 1px;
+      background: linear-gradient(90deg, rgba(30,144,255,0), rgba(30,144,255,0.55), rgba(30,144,255,0));
+      margin: 16px 0 0;
+    }
+
+    /* About */
+    .about-card{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      align-items:center;
+    }
+
+.about-avatar{
+      border-radius: 18px;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.03);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      padding: 14px;
+    }
+
+    .about-avatar img{
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 14px;
+      display:block;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(30,144,255,0.35);
+      background: rgba(30,144,255,0.12);
+      color: rgba(255,255,255,0.95);
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing:0.3px;
+      width: fit-content;
+      margin-bottom: 10px;
+    }
+
+    .about-text h3{
+      margin:0;
+      font-family:'Orbitron', system-ui, sans-serif;
+      letter-spacing:0.5px;
+      font-size: 20px;
+    }
+
+    .meta{
+      color: var(--muted);
+      font-weight:600;
+      margin-top: 6px;
+      font-size: 13.5px;
+    }
+
+    .about-text p{
+      margin: 12px 0 0;
+      color: rgba(255,255,255,0.86);
+      font-size: 15.5px;
+    }
+
+    /* Topics */
+    .topics-wrap{ display:grid; grid-template-columns: 1fr; gap: 16px; }
+
+    .topics-tabs{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 8px;
+      padding: 14px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .topic-tab{
+      flex: 1 1 auto;
+      min-width: 140px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(10,22,40,0.35);
+      color: rgba(255,255,255,0.90);
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing:0.2px;
+      cursor:pointer;
+      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+    }
+
+    .topic-tab:hover{ transform: translateY(-2px); border-color: rgba(30,144,255,0.40); }
+
+    .topic-tab[aria-selected="true"]{
+      background: rgba(30,144,255,0.18);
+      border-color: rgba(30,144,255,0.55);
+      box-shadow: 0 0 0 1px rgba(30,144,255,0.22) inset;
+    }
+
+    .topic-panel{
+      padding: 18px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .topic-panel h3{
+      margin: 0 0 8px 0;
+      font-family:'Orbitron', system-ui, sans-serif;
+      letter-spacing:0.4px;
+    }
+
+    .topic-panel p{
+      margin: 10px 0 0;
+      color: rgba(255,255,255,0.86);
+      font-size: 15px;
+    }
+
+    /* SVG */
+    .diagram-card{
+      padding: 0;
+    }
+
+    .diagram-header{
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.02);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+    }
+
+    .diagram-header span{
+      font-weight: 900;
+      letter-spacing:0.2px;
+      color: rgba(255,255,255,0.92);
+    }
+
+    .diagram-body{ padding: 10px 10px 16px; }
+
+    /* Inspiration */
+    .inspiration-section{
+      background: linear-gradient(180deg, rgba(30,144,255,0.08), rgba(255,255,255,0) 70%);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .video-card iframe{
+      border: 0;
+      width:100%;
+      height: 400px;
+      border-radius: 14px;
+    }
+
+    /* Resources */
+    .resources-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .links-list{
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .link-item{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .link-item strong{ font-size: 14px; }
+    .link-item small{ color: var(--muted); font-weight: 700; }
+
+    .bibliography{
+      margin: 0;
+      padding-left: 18px;
+      color: rgba(255,255,255,0.88);
+    }
+
+    .bibliography li{ margin: 10px 0; }
+
+    /* Footer + buttons */
+    footer{
+      padding: 26px 16px 34px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.12);
+    }
+
+    .footer-inner{
+      max-width: var(--max);
+      margin: 0 auto;
+      color: rgba(255,255,255,0.86);
+      font-weight: 700;
+      letter-spacing:0.2px;
+      text-align:center;
+    }
+
+    .back-to-top{
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 60;
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      border: 1px solid rgba(30,144,255,0.45);
+      background: rgba(30,144,255,0.18);
+      color:#fff;
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      box-shadow: 0 14px 30px rgba(0,0,0,0.35);
+      transition: transform 180ms ease, opacity 180ms ease;
+      opacity: 0;
+      pointer-events:none;
+    }
+
+    .back-to-top.is-visible{
+      opacity: 1;
+      pointer-events:auto;
+    }
+
+    .back-to-top:hover{ transform: translateY(-2px); }
+
+    .back-to-top svg{ width: 20px; height: 20px; }
+
+    /* Responsiveness */
+    @media (min-width: 860px){
+      .hero{ grid-template-columns: 1.2fr 0.8fr; align-items:center; }
+      .hero-panels{ grid-template-columns: 1fr; }
+      .about-card{ grid-template-columns: 0.42fr 0.58fr; }
+      .topics-wrap{ grid-template-columns: 1fr; }
+      .resources-grid{ grid-template-columns: 1fr 1fr; }
+      .section-grid{ gap: 22px; }
+    }
+
+    /* Reduce motion */
+    @media (prefers-reduced-motion: reduce){
+      html{ scroll-behavior:auto; }
+      .fade-in-up{ transition:none; }
+      .nav-link, .btn, .card, .topic-tab{ transition:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#home" style="position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden;">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <div class="nav-wrap">
+      <div class="brand" aria-label="Site Brand">
+        <div class="brand-mark" aria-hidden="true">
+          <!-- simple satellite icon -->
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13 2l2 2-6 6-2-2 6-6Z" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M4 15l5 5" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M14 9l6 6" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M16 2l6 6" stroke="#1e90ff" stroke-width="1.8" stroke-linecap="round"/>
+            <circle cx="8" cy="16" r="2" fill="#1e90ff"/>
+          </svg>
+        </div>
+        <div class="brand-title">
+          <strong>Advanced Data Communication</strong>
+          <span>Satellite Systems & Principles</span>
+        </div>
+      </div>
+
+      <nav aria-label="Primary">
+        <a class="nav-link" href="#home" data-nav="home">Home</a>
+        <a class="nav-link" href="#about" data-nav="about">About</a>
+        <a class="nav-link" href="#topics" data-nav="topics">Topics</a>
+        <a class="nav-link" href="#inspiration" data-nav="inspiration">Inspiration</a>
+        <a class="nav-link" href="#resources" data-nav="resources">Resources</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" role="main">
+    <!-- SECTION 1: HOME -->
+    <section id="home" aria-label="Home">
+      <div class="container hero">
+        <div>
+          <h1 class="fade-in-up">Advanced Data Communication: Satellite Systems &amp; Principles</h1>
+          <div class="subheading fade-in-up">A Comprehensive Academic Overview</div>
+          <p class="fade-in-up">
+            Satellite communications sit at the heart of modern data connectivity—turning radio waves into
+            global links that support broadcasting, internet access, navigation, and critical services.
+            From the 1957 launch of <strong>Sputnik</strong> and Arthur C. Clarke’s 1945 vision of geostationary
+            relays, satellite technology evolved through landmark systems such as early relay satellites and
+            INTELSAT, then accelerated during the digital revolution in the 1990s.
+            Today, broadband and high-throughput architectures power the era of <strong>LEO mega-constellations</strong> like Starlink,
+            reducing latency and expanding coverage.
+          </p>
+
+          <div class="sep"></div>
+
+          <div class="btn-row fade-in-up" style="margin-top:16px;">
+            <a class="btn btn-primary" 
+               href="https://docs.google.com/document/d/1LuYv9W6XmC0P-xcRx5z0vOP2IaSzXCRjaYthoI8jZdU/edit?usp=sharing" 
+               href="https://docs.google.com/document/d/1LuYv9W6XmC0P-xcRx5z0vOP2IaSzXCRjaYthoI8jZdU/edit?usp=sharing" 
+               target="_blank" rel="noopener">
+              <!-- external link icon -->
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14 3h7v7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M10 14L21 3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M21 14v6a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              View My Assignment
+            </a>
+          </div>
+        </div>
+
+        <aside class="hero-panels" aria-label="Quick Academic Highlights">
+          <div class="mini-stat fade-in-up">
+            <div class="k">Focus Areas</div>
+            <div class="v">Evolution, orbital regimes, modulation, HTS, and future trends</div>
+          </div>
+          <div class="mini-stat fade-in-up">
+            <div class="k">Why It Matters</div>
+            <div class="v">Reliable links for remote communities &amp; global data exchange</div>
+          </div>
+          <div class="mini-stat fade-in-up">
+            <div class="k">Core Skills</div>
+            <div class="v">RF bands, signal processing, latency &amp; system design trade-offs</div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- SECTION 2: ABOUT -->
+    <section id="about" aria-label="About Me">
+      <div class="container section-grid">
+        <div class="fade-in-up">
+          <h2 class="section-title">About Me</h2>
+        </div>
+
+        <article class="card about-card fade-in-up" aria-label="Student Profile">
+          <div class="about-avatar">
+            <!-- Replace YOUR+NAME with your actual name using + as space in this URL -->
+<img
+              src="imgs/Me.jpeg"
+              alt="Profile image of YOUR NAME"
+              width="200"
+              height="200" />
+          </div>
+
+          <div class="about-text card-body">
+            <div class="badge" aria-label="Program Badge">
+              <span aria-hidden="true">◆</span>
+              IT Student
+            </div>
+            <h3>REINDORF OPPONG ADJEI</h3>
+            <div class="meta">Student ID: <span style="color:#fff;">PUIT - 242100157 </span></div>
+            <p>
+              I’m a IT student focused on how communication systems transform raw signals into
+              reliable, high-speed data links. My interests span RF fundamentals, network design, and modern satellite
+              architectures—especially how LEO systems can improve access, latency, and resilience.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- SECTION 3: TOPICS -->
+    <section id="topics" aria-label="Topics Covered">
+      <div class="container section-grid">
+        <div class="fade-in-up">
+          <h2 class="section-title">Topics Covered</h2>
+        </div>
+
+        <div class="topics-wrap fade-in-up">
+          <div class="topics-tabs" role="tablist" aria-label="Satellite Communication Topics Tabs">
+            <button class="topic-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1">Evolution of Satellite Communications</button>
+            <button class="topic-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2">Orbital Mechanics (LEO, MEO, GEO)</button>
+            <button class="topic-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-3" id="tab-3">Frequency Spectrum &amp; Bands</button>
+            <button class="topic-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-4" id="tab-4">Signal Modulation</button>
+            <button class="topic-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-5" id="tab-5">High-Throughput Satellites &amp; Spot Beams</button>
+            <button class="topic-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-6" id="tab-6">Challenges &amp; Future Trends</button>
+          </div>
+
+          <div class="topic-panel" role="tabpanel" id="panel-1" aria-labelledby="tab-1">
+            <h3>Evolution of Satellite Communications</h3>
+            <p>
+              Satellite communication began as a demonstration of feasibility: Sputnik (1957) proved that
+              spaceborne radio could support worldwide observations. Shortly afterward, systems like SCORE (1958)
+              used store-and-forward concepts, enabling simple message transmission and establishing early ideas
+              of relay communications in orbit.
+            </p>
+            <p>
+              The field rapidly advanced with technologies and applications. ECHO I (1960) contributed to early
+              tracking and communications experiments, and Telstar (1962) brought operational satellite relays into
+              wider use—laying groundwork for international collaboration.
+            </p>
+            <p>
+              The establishment of INTELSAT (1964) formalized global satellite networking, helping standardize
+              service architectures and operational practices for broadcasting and telephony. As digital processing became
+              more affordable, the 1990s marked a transition from primarily analog links toward digital modulation,
+              framing, and error control.
+            </p>
+            <p>
+              More recently, broadband payloads and adaptive network management pushed performance further into
+              the “anywhere connectivity” era. The rise of LEO mega-constellations—motivated by shorter propagation
+              paths and scalable deployments—has shifted expectations around latency, coverage continuity, and
+              user throughput.
+            </p>
+          </div>
+
+          <div class="topic-panel" role="tabpanel" id="panel-2" aria-labelledby="tab-2" hidden>
+            <h3>Tab 2 — Orbital Mechanics (LEO, MEO, GEO)</h3>
+            <p>
+              Satellite orbit choices determine latency, coverage footprint, and system complexity. <strong>LEO</strong>
+              (typically a few hundred to about 2,000 km altitude) offers the shortest propagation distances.
+              In practice, this means latency on the order of single-digit milliseconds for much of the path,
+              with systems such as Starlink leveraging many satellites to maintain service as the constellation moves.
+              LEO is especially suited for broadband internet, IoT backhaul, and latency-sensitive applications.
+            </p>
+            <p>
+              <strong>MEO</strong> satellites orbit higher than LEO (roughly 5,000–12,000 km). The longer distance increases
+              round-trip time (often estimated around tens of milliseconds). However, MEO can provide an effective balance
+              between coverage area and constellation size. A common example is navigation and PNT services,
+              where stable orbital patterns and global coverage are essential.
+            </p>
+            <p>
+              <strong>GEO</strong> satellites sit at approximately 36,000 km altitude, enabling a fixed position relative to
+              the Earth’s surface (from a ground observer). The geostationary approach simplifies ground tracking and
+              enables consistent coverage for broadcast services. The trade-off is higher latency caused by the longer
+              propagation distance, which can be significant for interactive applications.
+            </p>
+            <p>
+              Designing satellite networks therefore requires selecting the orbit regime that best aligns with application
+              requirements—whether prioritizing low latency (LEO), wide-area coverage with moderate complexity (MEO),
+              or mature broadcast-style infrastructure (GEO).
+            </p>
+          </div>
+
+          <div class="topic-panel" role="tabpanel" id="panel-3" aria-labelledby="tab-3" hidden>
+            <h3>Tab 3 — Frequency Spectrum &amp; Bands</h3>
+            <p>
+              Satellite communication uses licensed RF spectrum allocated by bodies such as the ITU to prevent interference
+              and coordinate services globally. The choice of frequency band impacts link budget performance, antenna size,
+              bandwidth availability, and susceptibility to atmospheric effects.
+            </p>
+            <p>
+              <strong>C-band</strong> (approximately 4–8 GHz) is widely used for reliable coverage and is relatively resilient.
+              However, bandwidth efficiency can limit peak throughput compared to higher-frequency options.
+              <strong>Ku-band</strong> (around 12–18 GHz) provides more available bandwidth and supports many direct-to-home
+              and VSAT deployments, but it can be more affected by rain attenuation.
+            </p>
+            <p>
+              <strong>Ka-band</strong> (about 26.5–40 GHz) enables higher data rates due to larger available bandwidth.
+              Yet, higher frequencies experience stronger propagation loss during rain. This creates design needs such as
+              adaptive modulation/coding (where supported), link margin planning, and robust waveform strategies.
+            </p>
+            <p>
+              Spectrum planning must also account for overlap with terrestrial systems like 5G in adjacent regions.
+              Regulatory constraints, coordination boundaries, and interference management practices ensure spectrum is
+              used effectively—especially for dense or multi-operator environments.
+            </p>
+          </div>
+
+          <div class="topic-panel" role="tabpanel" id="panel-4" aria-labelledby="tab-4" hidden>
+            <h3>Tab 4 — Signal Modulation</h3>
+            <p>
+              Modulation is how information is mapped onto radio waves so that data can travel over the channel with
+              controllable robustness and efficiency. In classical analog methods, <strong>AM</strong>, <strong>FM</strong>, and <strong>PM</strong>
+              encode information using amplitude, frequency, or phase variations.
+            </p>
+            <p>
+              Modern satellite links frequently rely on digital modulation. <strong>QAM</strong> (Quadrature Amplitude Modulation)
+              places constellation points in I/Q space, enabling high spectral efficiency. Digital systems also use
+              <strong>PCM</strong> (Pulse Code Modulation) to represent audio/video or sampled measurements in discrete
+              values before transmission.
+            </p>
+            <p>
+              A <strong>MODEM</strong> translates between the bitstream and the RF waveform, using coding and framing to
+              mitigate errors from noise, interference, and fading. As satellite communications transitioned from FM
+              to digital formats, improvements in error control coding and adaptive link behavior improved reliability
+              and allowed higher throughput.
+            </p>
+            <p>
+              Compression complements modulation. Techniques such as MPEG-2 compression support HDTV and broadcast
+              services by reducing the payload bit rate needed for acceptable visual quality. In DBS-TV systems,
+              the modulation and coding stack is tuned to deliver consistent service across different channel conditions.
+            </p>
+          </div>
+
+          <div class="topic-panel" role="tabpanel" id="panel-5" aria-labelledby="tab-5" hidden>
+            <h3>Tab 5 — High-Throughput Satellites &amp; Spot Beams</h3>
+            <p>
+              <strong>High-Throughput Satellites (HTS)</strong> are designed to deliver significantly more capacity than
+              earlier generations by using advanced frequency reuse, higher-gain antennas, and spot-beam architectures.
+              Instead of covering broad regions uniformly, HTS systems concentrate energy into smaller beams and reuse
+              spectrum across them.
+            </p>
+            <p>
+              A representative example is ViaSat-1, designed for broadband distribution with capacity figures
+              reported up to ~140 Gbit/s depending on configuration. The underlying idea is that many smaller
+              coverage areas—combined with frequency planning and beam isolation—enable more efficient utilization
+              of limited spectrum.
+            </p>
+            <p>
+              Spot beams are typically produced using phased-array techniques and/or steerable feeds. Beamforming
+              focuses transmit power toward intended coverage footprints, improving the link budget and reducing
+              interference to adjacent beams.
+            </p>
+            <p>
+              Compared to traditional Fixed Service (FSS)-style wide coverage, HTS can better support high-demand
+              applications like DTH and cellular backhaul. However, it requires careful management of interference,
+              user scheduling, and gateway operations—often using sophisticated network control.
+            </p>
+          </div>
+
+          <div class="topic-panel" role="tabpanel" id="panel-6" aria-labelledby="tab-6" hidden>
+            <h3>Tab 6 — Challenges &amp; Future Trends</h3>
+            <p>
+              Satellite links face multiple physical and network challenges. Atmospheric attenuation is a major factor:
+              rain fade reduces signal strength, while absorption by atmospheric constituents (notably O₂ and H₂O)
+              increases loss at specific frequency ranges.
+            </p>
+            <p>
+              Latency is another key constraint. Latency includes propagation delay and processing/queuing delays.
+              Propagation delay depends largely on distance: GEO’s ~36,000 km round trip yields noticeably higher
+              latency, while LEO’s shorter paths reduce it. Network routing and scheduling also matter—particularly in
+              systems that involve inter-satellite handovers.
+            </p>
+            <p>
+              Future satellite networks are increasingly guided by AI integration concepts for 6G-era systems.
+              Three common stages are discussed: <strong>AI for network</strong> (predictive optimization, fault detection,
+              scheduling), <strong>network for AI</strong> (ensuring required QoS and transport for AI workloads), and
+              <strong>AI as a service</strong> (using connected infrastructure to deploy model inference where needed).
+            </p>
+            <p>
+              Together, these trends suggest a direction toward adaptive waveform selection, intelligent link adaptation,
+              and automated resource allocation—turning satellite systems into dynamic, software-defined connectivity platforms.
+            </p>
+          </div>
+        </div>
+
+        <!-- Telegraph Diagram (inline SVG) -->
+        <article class="card diagram-card fade-in-up" aria-label="Telegraph Communication System Diagram">
+          <div class="diagram-header">
+            <span>Telegraph Communication System</span>
+            <span style="color:var(--muted); font-weight:800; font-size:12px;">Vintage / Sepia SVG</span>
+          </div>
+          <div class="diagram-body">
+            <svg viewBox="0 0 980 300" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Telegraph Communication System">
+              <defs>
+                <linearGradient id="sepiaStroke" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#d2a679"/>
+                  <stop offset="1" stop-color="#7a4b2a"/>
+                </linearGradient>
+                <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000" flood-opacity="0.25" />
+                </filter>
+              </defs>
+
+              <rect x="10" y="10" width="960" height="280" rx="18" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.10)"/>
+
+              <!-- Title -->
+              <text x="490" y="44" text-anchor="middle" font-family="Orbitron, Inter, sans-serif" font-size="20" fill="#f2d6b8" letter-spacing="0.5">Telegraph Communication System</text>
+
+              <!-- Sender -->
+              <g filter="url(#softShadow)">
+                <rect x="70" y="85" width="190" height="130" rx="16" fill="rgba(210,166,121,0.10)" stroke="url(#sepiaStroke)" stroke-width="2" />
+                <text x="165" y="125" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" fill="#f4e2cf" font-weight="700">Sender</text>
+                <text x="165" y="152" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" fill="#cdb39a">Morse Key</text>
+
+                <!-- Morse key -->
+                <rect x="130" y="165" width="70" height="36" rx="10" fill="rgba(122,75,42,0.20)" stroke="url(#sepiaStroke)" stroke-width="2"/>
+                <path d="M165 120 L165 165" stroke="rgba(210,166,121,0.9)" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="165" cy="120" r="8" fill="#f2d6b8" stroke="url(#sepiaStroke)" stroke-width="2"/>
+                <text x="165" y="218" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" fill="#b88f6d">(· · — —)</text>
+              </g>
+
+              <!-- Transmission Line -->
+              <g>
+                <text x="490" y="90" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" fill="#cdb39a" font-weight="700">Transmission Line</text>
+
+                <!-- wire -->
+                <path d="M260 155 C 380 155, 600 155, 720 155" stroke="url(#sepiaStroke)" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+                <!-- signal pulses dots and dashes -->
+                <!-- Dots -->
+                <circle cx="355" cy="155" r="6" fill="#f2d6b8" stroke="url(#sepiaStroke)" stroke-width="2"/>
+                <circle cx="385" cy="155" r="6" fill="#f2d6b8" stroke="url(#sepiaStroke)" stroke-width="2"/>
+
+                <!-- Dashes -->
+                <rect x="420" y="145" width="26" height="20" rx="10" fill="#f2d6b8" stroke="url(#sepiaStroke)" stroke-width="2"/>
+                <rect x="458" y="145" width="26" height="20" rx="10" fill="#f2d6b8" stroke="url(#sepiaStroke)" stroke-width="2"/>
+
+                <!-- label for pulses -->
+                <text x="490" y="205" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" fill="#f4e2cf" font-weight="800">Signal Pulses (· · — —)</text>
+              </g>
+
+              <!-- Receiver -->
+              <g filter="url(#softShadow)">
+                <rect x="720" y="85" width="190" height="130" rx="16" fill="rgba(210,166,121,0.10)" stroke="url(#sepiaStroke)" stroke-width="2" />
+                <text x="815" y="125" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" fill="#f4e2cf" font-weight="700">Receiver</text>
+                <text x="815" y="152" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" fill="#cdb39a">Sounder</text>
+
+                <!-- sounder -->
+                <circle cx="815" cy="185" r="20" fill="rgba(122,75,42,0.18)" stroke="url(#sepiaStroke)" stroke-width="2"/>
+                <path d="M805 185 L815 165 L825 185" fill="rgba(210,166,121,0.55)" stroke="url(#sepiaStroke)" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M815 205 C 835 200, 850 212, 860 230" stroke="rgba(210,166,121,0.65)" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <text x="815" y="226" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" fill="#b88f6d">(decoded)</text>
+              </g>
+
+              <!-- tiny arrows -->
+              <path d="M275 155 L320 155" stroke="rgba(210,166,121,0.35)" stroke-width="2"/>
+              <path d="M660 155 L705 155" stroke="rgba(210,166,121,0.35)" stroke-width="2"/>
+            </svg>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- SECTION 4: INSPIRATION -->
+    <section id="inspiration" class="inspiration-section" aria-label="What Inspires Me">
+      <div class="container section-grid">
+        <div class="fade-in-up">
+          <h2 class="section-title">What Inspires Me</h2>
+        </div>
+
+        <div class="section-grid" style="gap:16px;">
+          <article class="card card-body fade-in-up">
+            <p>
+              Satellite communication inspires me because it turns infrastructure into opportunity. When connectivity
+              is available anywhere, education, emergency coordination, and economic growth can become more equitable.
+              For many underserved regions, satellite links bridge gaps where fiber networks and terrestrial coverage
+              are limited.
+            </p>
+            <p>
+              I’m especially motivated by the potential to connect remote communities in places where infrastructure
+              is difficult to build—such as parts of Africa where terrain, distance, and cost challenges can delay
+              reliable internet access. LEO and HTS systems help reduce barriers by improving availability and
+              performance where traditional deployments are slow.
+            </p>
+            <p>
+              The role of LEO satellites in developing nations feels transformative: lower latency supports more interactive
+              services (like remote learning platforms and telehealth), while constellation-based redundancy improves
+              resilience during disruptions. Data communication is not only about speed—it’s about access to the same
+              opportunities as the rest of the world.
+            </p>
+            <p>
+              Ultimately, I see satellite communication as a practical application of engineering creativity. By combining
+              RF design, signal processing, networking, and orbit planning, we can deliver connectivity that scales and
+              adapts—making the future more connected for everyone.
+            </p>
+          </article>
+
+          <article class="card video-card fade-in-up" aria-label="Embedded Video">
+            <div class="card-body">
+              <div style="font-weight:900; letter-spacing:0.2px; margin-bottom:10px;">Watch: How Satellite Communication Works</div>
+              <iframe width="100%" height="400" src="https://www.youtube.com/embed/t82-QBiBBoQ?si=ljEI3aGs5epMNq9G" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: RESOURCES -->
+    <section id="resources" aria-label="Resources">
+      <div class="container section-grid">
+        <div class="fade-in-up">
+          <h2 class="section-title">Resources</h2>
+        </div>
+
+        <div class="resources-grid fade-in-up">
+          <article class="card">
+            <div class="card-body">
+              <h3 class="section-title" style="font-size:18px; margin-bottom:6px;">Links &amp; References</h3>
+              <div class="meta" style="margin-top:0;">Useful starting points for satellite communication study</div>
+
+              <div class="links-list" role="list">
+                <a class="link-item" href="#home" role="listitem" aria-label="Back to Home">
+                  <strong>Back to Home</strong>
+                  <small>Anchor</small>
+                </a>
+
+                <a class="link-item" href="https://docs.google.com/document/d/1LuYv9W6XmC0P-xcRx5z0vOP2IaSzXCRjaYthoI8jZdU/edit?usp=sharing" target="_blank" rel="noopener" role="listitem" aria-label="My Assignment (Turnitin Copy)">
+                  <strong>My Assignment (Turnitin Copy)</strong>
+                  <small>New Tab</small>
+                </a>
+
+                <a class="link-item" href="https://www.youtube.com/watch?v=OU3WEDDONmM" target="_blank" rel="noopener" role="listitem" aria-label="Watch on YouTube">
+                  <strong>Watch on YouTube</strong>
+                  <small>New Tab</small>
+                </a>
+
+                <a class="link-item" href="https://www.itu.int" target="_blank" rel="noopener" role="listitem" aria-label="ITU Spectrum Management">
+                  <strong>ITU Spectrum Management</strong>
+                  <small>External</small>
+                </a>
+
+                <a class="link-item" href="https://www.starlink.com" target="_blank" rel="noopener" role="listitem" aria-label="SpaceX Starlink">
+                  <strong>SpaceX Starlink</strong>
+                  <small>External</small>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <h3 class="section-title" style="font-size:18px; margin-bottom:6px;">Bibliography / References</h3>
+              <ul class="bibliography">
+                <li>Clarke, A. C. (1945). <em>“Wireless World” / “Extra-Terrestrial Relays”</em> — proposal for geostationary communication relays.</li>
+                <li>Sputnik 1 Launch (1957). Historical milestone demonstrating the viability of space-based radio communications.</li>
+                <li>INTELSAT Establishment (1964). Foundational steps toward global satellite communication services and standardized operations.</li>
+                <li>ViaSat-1 Launch (2011). Broadband high-capacity satellite systems and modern HTS architecture references.</li>
+                <li>ITU. <em>Frequency allocations &amp; spectrum management</em> — regulatory documentation guiding band usage and coordination.</li>
+                <li>SpaceX Starlink. Public technical and deployment information describing large-scale LEO constellation concepts.</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" id="backToTop" type="button" aria-label="Back to Top">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 19V5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+      <path d="M6 11l6-6 6 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <footer role="contentinfo">
+    <!-- REPLACE WITH YOUR GITHUB PAGES LINK -->
+    <div class="footer-inner">© 2026 REINDORF OPPONG ADJEI | Student ID: PUIT 242100157</div>
+    <div | Advanced Data Communication</div>
+    <div>Advanced Data Communication</div>
+  </footer>
+
+  <script>
+    // IntersectionObserver: highlight active navbar link
+    (function(){
+      const navLinks = Array.from(document.querySelectorAll('.nav-link'));
+      const sections = [
+        document.getElementById('home'),
+        document.getElementById('about'),
+        document.getElementById('topics'),
+        document.getElementById('inspiration'),
+        document.getElementById('resources')
+      ].filter(Boolean);
+
+      if (!('IntersectionObserver' in window) || sections.length === 0) {
+        // Fallback: set based on scroll position
+        const setActive = () => {
+          const y = window.scrollY + 100;
+          let current = sections[0];
+          for (const s of sections) {
+            if (s.offsetTop <= y) current = s;
+          }
+          navLinks.forEach(a => a.setAttribute('aria-current', a.dataset.nav === current.id ? 'page' : 'false'));
+        };
+        window.addEventListener('scroll', setActive, { passive: true });
+        setActive();
+        return;
+      }
+
+      const mapIdToLink = new Map(navLinks.map(a => [a.dataset.nav, a]));
+
+      const observer = new IntersectionObserver((entries) => {
+        // pick entry with highest intersection ratio among intersecting
+        const visible = entries.filter(e => e.isIntersecting).sort((a,b) => (b.intersectionRatio - a.intersectionRatio));
+        if (!visible.length) return;
+        const id = visible[0].target.id;
+        const link = mapIdToLink.get(id);
+        navLinks.forEach(a => a.setAttribute('aria-current', a === link ? 'page' : 'false'));
+      }, {
+        root: null,
+        threshold: [0.15, 0.25, 0.4, 0.6]
+      });
+
+      sections.forEach(s => observer.observe(s));
+
+      // Ensure initial state
+      navLinks.forEach(a => a.setAttribute('aria-current', 'false'));
+    })();
+
+    // Fade-in-up headings on scroll
+    (function(){
+      const items = Array.from(document.querySelectorAll('.fade-in-up'));
+      if (!('IntersectionObserver' in window) || items.length === 0) {
+        items.forEach(el => el.classList.add('is-visible'));
+        return;
+      }
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      items.forEach(el => io.observe(el));
+    })();
+
+    // Topics tabs (pure JS, accessible roles)
+    (function(){
+      const tabButtons = Array.from(document.querySelectorAll('.topic-tab'));
+      const panels = Array.from(document.querySelectorAll('.topic-panel'));
+      if (tabButtons.length === 0 || panels.length === 0) return;
+
+      const showPanel = (panelId) => {
+        // Tabs state
+        tabButtons.forEach(btn => {
+          const selected = btn.getAttribute('aria-controls') === panelId;
+          btn.setAttribute('aria-selected', selected ? 'true' : 'false');
+        });
+
+        // Panels state
+        panels.forEach(p => {
+          const isActive = p.id === panelId;
+          p.hidden = !isActive;
+        });
+      };
+
+      tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const panelId = btn.getAttribute('aria-controls');
+          showPanel(panelId);
+        });
+
+        btn.addEventListener('keydown', (e) => {
+          // Basic keyboard navigation: Left/Right
+          if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+          e.preventDefault();
+          const idx = tabButtons.indexOf(btn);
+          const next = e.key === 'ArrowRight' ? (idx + 1) % tabButtons.length : (idx - 1 + tabButtons.length) % tabButtons.length;
+          tabButtons[next].focus();
+          showPanel(tabButtons[next].getAttribute('aria-controls'));
+        });
+      });
+    })();
+
+    // Back to Top button
+    (function(){
+      const btn = document.getElementById('backToTop');
+      if (!btn) return;
+
+      const update = () => {
+        const show = window.scrollY > 600;
+        btn.classList.toggle('is-visible', show);
+      };
+
+      window.addEventListener('scroll', update, { passive: true });
+      update();
+
+      btn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    })();
+  </script>
+</body>
+</html>
